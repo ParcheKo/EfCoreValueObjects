@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EfCoreValueObjects
 {
-    public class CompanyAddress : ValueObject
+    public abstract class CompanyAddress : ValueObject
     {
         protected CompanyAddress(string city, string addressLine1)
         {
@@ -26,7 +26,7 @@ namespace EfCoreValueObjects
             yield return this.Type;
         }
 
-        public AddressType Type { get; protected set; }
+        public abstract AddressType Type { get; }
     }
 
     public enum AddressType
@@ -43,6 +43,7 @@ namespace EfCoreValueObjects
         }
 
         public string BillingAddressCustomInfo { get; private set; }
+        public override AddressType Type => AddressType.Billing;
     }
 
     public class ShippingAddress : CompanyAddress
@@ -51,7 +52,9 @@ namespace EfCoreValueObjects
             : base(city, addressLine1)
         {
         }
+
         public string ShippingAddressCustomInfo { get; private set; }
 
+        public override AddressType Type => AddressType.Shipping;
     }
 }
