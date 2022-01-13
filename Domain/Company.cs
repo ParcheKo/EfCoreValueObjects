@@ -6,7 +6,7 @@ namespace EfCoreValueObjects
 {
     public class Company
     {
-        private List<CompanyAddress> addresses = new List<CompanyAddress>();
+        private readonly List<CompanyAddress> _addresses = new();
 
         public Company(Guid id, string name)
         {
@@ -20,11 +20,11 @@ namespace EfCoreValueObjects
         
         public string Name { get; }
 
-        public IEnumerable<CompanyAddress> Addresses
+        public IReadOnlyCollection<CompanyAddress> Addresses
         {
             get
             {
-                return this.addresses;
+                return this._addresses;
             }
         }
 
@@ -32,11 +32,11 @@ namespace EfCoreValueObjects
         {
             Assertions.AssertNotNull(address, "Must provide address");
 
-            var exists = this.addresses.Contains(address);
+            var exists = this._addresses.Contains(address);
 
             if (!exists)
             {
-                this.addresses.Add(address);
+                this._addresses.Add(address);
             }
         }
     }
