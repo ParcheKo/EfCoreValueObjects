@@ -26,7 +26,7 @@ namespace EfCoreValueObjects
             yield return this.Type;
         }
 
-        public abstract AddressType Type { get; }
+        public abstract AddressType Type { get; protected set; }
     }
 
     public enum AddressType
@@ -43,7 +43,12 @@ namespace EfCoreValueObjects
         }
 
         public string BillingAddressCustomInfo { get; private set; }
-        public override AddressType Type => AddressType.Billing;
+
+        public override AddressType Type
+        {
+            get => AddressType.Billing;
+            protected set { }
+        }
     }
 
     public class ShippingAddress : CompanyAddress
@@ -55,6 +60,10 @@ namespace EfCoreValueObjects
 
         public string ShippingAddressCustomInfo { get; private set; }
 
-        public override AddressType Type => AddressType.Shipping;
+        public override AddressType Type
+        {
+            get => AddressType.Shipping;
+            protected set { }
+        }
     }
 }
