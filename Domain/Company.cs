@@ -6,7 +6,8 @@ namespace EfCoreValueObjects
 {
     public class Company
     {
-        private readonly List<CompanyAddress> _addresses = new();
+        private readonly List<BillingAddress> _billingAddresses = new();
+        private readonly List<ShippingAddress> _shippingAddresses = new();
 
         public Company(Guid id, string name)
         {
@@ -20,23 +21,30 @@ namespace EfCoreValueObjects
         
         public string Name { get; }
 
-        public IReadOnlyCollection<CompanyAddress> Addresses
-        {
-            get
-            {
-                return this._addresses;
-            }
-        }
+        public IReadOnlyCollection<BillingAddress> BillingAddresses => this._billingAddresses;
+        public IReadOnlyCollection<ShippingAddress> ShippingAddresses => this._shippingAddresses;
 
-        public void AssignAddress(CompanyAddress address)
+        public void AssignBillingAddress(BillingAddress billingAddress)
         {
-            Assertions.AssertNotNull(address, "Must provide address");
+            Assertions.AssertNotNull(billingAddress, "Must provide address");
 
-            var exists = this._addresses.Contains(address);
+            var exists = this._billingAddresses.Contains(billingAddress);
 
             if (!exists)
             {
-                this._addresses.Add(address);
+                this._billingAddresses.Add(billingAddress);
+            }
+        }
+        
+        public void AssignShippingAddress(ShippingAddress shippingAddress)
+        {
+            Assertions.AssertNotNull(shippingAddress, "Must provide address");
+
+            var exists = this._shippingAddresses.Contains(shippingAddress);
+
+            if (!exists)
+            {
+                this._shippingAddresses.Add(shippingAddress);
             }
         }
     }

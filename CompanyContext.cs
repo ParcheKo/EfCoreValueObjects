@@ -29,14 +29,12 @@ namespace EfCoreValueObjects
             // });
 
             modelBuilder.Entity<Company>().OwnsMany(
-                c => c.Addresses,
+                c => c.BillingAddresses,
                 a =>
                 {
                     var foreignKeyPropertyName = $"{nameof(Company)}{nameof(Company.Id)}";
                     a.WithOwner()
-                        // .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field)
                         .HasForeignKey(foreignKeyPropertyName);
-                    // a.HasForeignKey("CompanyId");
                     a.Property(ca => ca.City);
                     a.Property(ca => ca.AddressLine1);
                     a.HasKey(
@@ -45,13 +43,26 @@ namespace EfCoreValueObjects
                         nameof(CompanyAddress.AddressLine1),
                         nameof(CompanyAddress.Type)
                     );
-                    // a.ToTable(nameof(CompanyAddress)).HasDiscriminator<AddressType>(nameof(CompanyAddress.Type))
-                    //     .HasValue<BillingAddress>(AddressType.Billing)
-                    //     .HasValue<ShippingAddress>(AddressType.Shipping);
+                });
+            modelBuilder.Entity<Company>().OwnsMany(
+                c => c.ShippingAddresses,
+                a =>
+                {
+                    var foreignKeyPropertyName = $"{nameof(Company)}{nameof(Company.Id)}";
+                    a.WithOwner()
+                        .HasForeignKey(foreignKeyPropertyName);
+                    a.Property(ca => ca.City);
+                    a.Property(ca => ca.AddressLine1);
+                    a.HasKey(
+                        foreignKeyPropertyName,
+                        nameof(CompanyAddress.City),
+                        nameof(CompanyAddress.AddressLine1),
+                        nameof(CompanyAddress.Type)
+                    );
                 });
 
             modelBuilder.Entity<Person>()
-                .HasKey(p=>p.Id);
+                .HasKey(p => p.Id);
             modelBuilder.Entity<Person>().ToTable(nameof(Person))
                 .HasDiscriminator<PersonTypes>(nameof(Person.Type))
                 .HasValue<Employee>(PersonTypes.Employee)

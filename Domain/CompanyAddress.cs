@@ -41,6 +41,8 @@ namespace EfCoreValueObjects
             : base(city, addressLine1)
         {
         }
+
+        public string BillingAddressCustomInfo { get; private set; }
     }
 
     public class ShippingAddress : CompanyAddress
@@ -49,5 +51,7 @@ namespace EfCoreValueObjects
             : base(city, addressLine1)
         {
         }
+        public string ShippingAddressCustomInfo { get; private set; }
+
     }
 }

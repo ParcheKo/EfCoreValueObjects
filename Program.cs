@@ -13,8 +13,8 @@ namespace EfCoreValueObjects
 
             await using var context = new CompanyContext();
             var company = new Company(Guid.NewGuid(), "My Company");
-            company.AssignAddress(new BillingAddress("Sofia", "Billing Address"));
-            company.AssignAddress(new ShippingAddress("Plovdiv", "Shipping Address"));
+            company.AssignBillingAddress(new BillingAddress("Sofia", "Billing Address"));
+            company.AssignShippingAddress(new ShippingAddress("Plovdiv", "Shipping Address"));
             context.Companies.Add(company);
 
             var people = new List<Person>()
@@ -23,7 +23,7 @@ namespace EfCoreValueObjects
                 new Student(Guid.NewGuid()),
             };
             await context.AddRangeAsync(people);
-                
+
             await context.SaveChangesAsync();
         }
 
