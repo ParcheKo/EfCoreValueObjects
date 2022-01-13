@@ -6,7 +6,7 @@ namespace EfCoreValueObjects
 {
     public class CompanyAddress : ValueObject
     {
-        public CompanyAddress(string city, string addressLine1)
+        protected CompanyAddress(string city, string addressLine1)
         {
             Assertions.AssertNotNullAndNotEmpty(city, "Must provide city");
             Assertions.AssertNotNullAndNotEmpty(addressLine1, "Must provide address line");
@@ -23,6 +23,31 @@ namespace EfCoreValueObjects
         {
             yield return this.City;
             yield return this.AddressLine1;
+            yield return this.Type;
+        }
+
+        public AddressType Type { get; protected set; }
+    }
+
+    public enum AddressType
+    {
+        Billing = 1,
+        Shipping = 2
+    }
+
+    public class BillingAddress : CompanyAddress
+    {
+        public BillingAddress(string city, string addressLine1)
+            : base(city, addressLine1)
+        {
+        }
+    }
+
+    public class ShippingAddress : CompanyAddress
+    {
+        public ShippingAddress(string city, string addressLine1)
+            : base(city, addressLine1)
+        {
         }
     }
 }

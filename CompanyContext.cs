@@ -42,8 +42,12 @@ namespace EfCoreValueObjects
                     a.HasKey(
                         foreignKeyPropertyName,
                         nameof(CompanyAddress.City),
-                        nameof(CompanyAddress.AddressLine1)
+                        nameof(CompanyAddress.AddressLine1),
+                        nameof(CompanyAddress.Type)
                     );
+                    // a.ToTable(nameof(CompanyAddress)).HasDiscriminator<AddressType>(nameof(CompanyAddress.Type))
+                    //     .HasValue<BillingAddress>(AddressType.Billing)
+                    //     .HasValue<ShippingAddress>(AddressType.Shipping);
                 });
 
             modelBuilder.Entity<Person>()
