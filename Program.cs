@@ -8,7 +8,7 @@ namespace EfCoreValueObjects
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main1(string[] args)
         {
             InitDb();
 
