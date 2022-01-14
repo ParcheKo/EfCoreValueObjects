@@ -49,6 +49,11 @@ namespace EfCoreValueObjects
             get => AddressType.Billing;
             protected set { }
         }
+        
+        public BillingAddress Clone()
+        {
+            return new BillingAddress(City, AddressLine1);
+        }
     }
 
     public class ShippingAddress : CompanyAddress
