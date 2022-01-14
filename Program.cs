@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,31 @@ namespace EfCoreValueObjects
             await context.AddRangeAsync(people);
 
             await context.SaveChangesAsync();
+
+            var companies = await context.Set<Company>()
+                .Where(p => p.Name == "My Company").ToListAsync();
+            foreach (var myCompany in companies)
+            {
+                Console.WriteLine($"Name: {myCompany.Name}");
+                
+                Console.WriteLine($"Addresses:");
+                
+                foreach (var billingAddress in myCompany.BillingAddresses)
+                {
+                    Console.WriteLine($"\t- Billing address: {billingAddress.AddressLine1}, {billingAddress.City}");
+                }
+
+                Console.WriteLine("-------------------");
+
+                foreach (var shippingAddress in myCompany.ShippingAddresses)
+                {
+                    Console.WriteLine($"\t- Shipping address: {shippingAddress.AddressLine1}, {shippingAddress.City}");
+                }
+
+                Console.WriteLine("=============================");
+            }
+
+            Console.ReadLine();
         }
 
         private static void InitDb()
