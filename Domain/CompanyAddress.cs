@@ -37,13 +37,17 @@ namespace EfCoreValueObjects
 
     public class BillingAddress : CompanyAddress
     {
-        public BillingAddress(string city, string addressLine1)
+        public BillingAddress(string city, string addressLine1, string billingAddressCustomInfo)
             : base(city, addressLine1)
         {
+            BillingAddressCustomInfo = billingAddressCustomInfo;
+            CreationMoment= DateTimeOffset.UtcNow;
         }
 
         public string BillingAddressCustomInfo { get; private set; }
 
+        public DateTimeOffset CreationMoment { get; private set; }
+        
         public override AddressType Type
         {
             get => AddressType.Billing;
@@ -52,7 +56,7 @@ namespace EfCoreValueObjects
         
         public BillingAddress Clone()
         {
-            return new BillingAddress(City, AddressLine1);
+            return new BillingAddress(City, AddressLine1, BillingAddressCustomInfo);
         }
     }
 

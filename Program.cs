@@ -14,7 +14,7 @@ namespace EfCoreValueObjects
 
             await using var context = new CompanyContext();
             var company = new Company(Guid.NewGuid(), "My Company");
-            company.AssignBillingAddress(new BillingAddress("Sofia", "Billing Address"));
+            company.AssignBillingAddress(new BillingAddress("Sofia", "Billing Address", "test"));
             company.AssignShippingAddress(new ShippingAddress("Plovdiv", "Shipping Address"));
             context.Companies.Add(company);
 

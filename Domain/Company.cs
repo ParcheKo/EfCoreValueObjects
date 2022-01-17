@@ -18,7 +18,7 @@ namespace EfCoreValueObjects
         }
 
         public Guid Id { get; }
-        
+
         public string Name { get; }
 
         public IReadOnlyCollection<BillingAddress> BillingAddresses => this._billingAddresses;
@@ -35,7 +35,24 @@ namespace EfCoreValueObjects
                 this._billingAddresses.Add(billingAddress);
             }
         }
-        
+
+        public void RemoveBillingAddress(BillingAddress billingAddress)
+        {
+            Assertions.AssertNotNull(billingAddress, "Must provide address");
+
+            var exists = this._billingAddresses.Contains(billingAddress);
+
+            if (exists)
+            {
+                this._billingAddresses.Remove(billingAddress);
+            }
+        }
+
+        public void RemoveAllBillingAddresses()
+        {
+            _billingAddresses.Clear();
+        }
+
         public void AssignShippingAddress(ShippingAddress shippingAddress)
         {
             Assertions.AssertNotNull(shippingAddress, "Must provide address");
